@@ -1169,7 +1169,10 @@
                     date.setDate(date.getDate() + 1);
                 }
 
-                // Return both Bible Study and Sunday Service for each Sunday
+                // Calculate Easter to exclude it from Divine Service
+                const easter = this.calculateEaster(year);
+
+                // Return both Bible Study and Sunday Service for each Sunday (except Easter)
                 const services = [];
                 sundays.forEach(sunday => {
                     services.push({
@@ -1177,11 +1180,14 @@
                         name: 'Bible Study',
                         time: '10:00 AM'
                     });
-                    services.push({
-                        date: new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate(), 11, 0),
-                        name: 'Divine Service',
-                        time: '11:00 AM'
-                    });
+                    // Don't add Divine Service for Easter Sunday (Easter Service will be shown instead)
+                    if (!this.isSameDay(sunday, easter)) {
+                        services.push({
+                            date: new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate(), 11, 0),
+                            name: 'Divine Service',
+                            time: '11:00 AM'
+                        });
+                    }
                 });
                 return services;
             }
