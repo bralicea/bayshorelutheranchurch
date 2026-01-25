@@ -47,7 +47,7 @@
     </nav>
     <!-- END nav -->
 
-    <section class="hero-wrap hero-wrap-2 hero-reduced" style="background-image: url('images/church_christmas.jpeg'); background-size: cover; background-position: center calc(50% - 100px); background-repeat: no-repeat;">
+    <section class="hero-wrap hero-wrap-2 hero-reduced" style="background-image: url('images/church_christmas.jpeg'); background-size: cover; background-repeat: no-repeat;">
         <div class="overlay" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(206, 15, 61, 0.3) 100%);"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -223,6 +223,11 @@
             z-index: 2;
             animation: fadeInUp 1s ease-out;
         }
+
+        /* Ensure the hero background crops consistently (overrides theme CSS) */
+        .hero-reduced {
+            background-position: center calc(50% - 100px) !important;
+        }
         
         @keyframes fadeInUp {
             from {
@@ -373,6 +378,12 @@
         }
         
         @media (max-width: 768px) {
+            /* Mobile: avoid iOS/Android issues with fixed backgrounds + adjust crop */
+            .hero-reduced {
+                background-attachment: scroll !important;
+                background-position: center top !important;
+            }
+
             .hero-title {
                 font-size: 2.5rem;
             }
