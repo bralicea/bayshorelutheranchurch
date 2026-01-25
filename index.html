@@ -423,7 +423,6 @@
         
         /* Smooth scrolling for anchor links */
         html {
-            scroll-behavior: smooth;
             scroll-padding-top: 120px;
             /* Offset for fixed wrap + navbar */
         }
@@ -1547,36 +1546,6 @@
                     navbar.classList.remove('scrolled');
                 }
             }, { passive: true });
-            
-            // Prevent accidental scroll jumps on mobile
-            if (window.innerWidth <= 768) {
-                let touchStartY = 0;
-                let touchEndY = 0;
-                
-                document.addEventListener('touchstart', function(e) {
-                    touchStartY = e.touches[0].clientY;
-                }, { passive: true });
-                
-                document.addEventListener('touchmove', function(e) {
-                    touchEndY = e.touches[0].clientY;
-                }, { passive: true });
-                
-                // Prevent anchor links from causing scroll jumps during normal scrolling
-                document.addEventListener('click', function(e) {
-                    const target = e.target.closest('a[href^="#"]');
-                    if (target && target.getAttribute('href') !== '#') {
-                        // Only allow programmatic smooth scroll, not during active touch scrolling
-                        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-                        const scrollDelta = Math.abs(touchEndY - touchStartY);
-                        
-                        // If user was scrolling (large delta), prevent anchor navigation
-                        if (scrollDelta > 10) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    }
-                }, true);
-            }
 
         });
 
@@ -1657,7 +1626,7 @@
                         <a href="https://www.paypal.com/paypalme/BayshoreLutheran?locale.x=en_US" class="btn-donate btn-donate-paypal">
                             <i class="fab fa-paypal mr-2"></i>Donate with PayPal
                         </a>
-                        <a href="#" class="btn-donate btn-donate-zelle" id="zelle-btn" onclick="event.preventDefault(); document.getElementById('zelle-modal').classList.add('show');">
+                        <a href="#" class="btn-donate btn-donate-zelle" id="zelle-btn" onclick="document.getElementById('zelle-modal').classList.add('show'); return false;">
                             <i class="fas fa-wallet mr-2"></i>Donate with Zelle
                         </a>
                     </div>
@@ -3070,7 +3039,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
